@@ -1,6 +1,6 @@
 # How-to-Talk-Building-Good-Training-Datasets
 
-January 15, 2021
+January 23, 2021
 
 I appreciate comments. Shoot me an email at noel_s_cruz@yahoo.com!
 
