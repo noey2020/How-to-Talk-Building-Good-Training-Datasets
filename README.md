@@ -171,6 +171,74 @@ or any new data point.
 
 Selecting meaningful features
 
+If we notice that a model performs much better on a training dataset than on the
+test dataset, this observation is a strong indicator of overfitting. As we discussed 
+earlier, overfitting means the model fits the parameters too closely with regard to 
+the particular observations in the training dataset, but does not generalize well to
+new data; we say that the model has a high variance. The reason for the overfitting
+is that our model is too complex for the given training data. Common solutions to
+reduce the generalization error are as follows:
+
+-- Collect more training data
+-- Introduce a penalty for complexity via regularization
+-- Choose a simpler model with fewer parameters
+-- Reduce the dimensionality of the data
+
+Collecting more training data is often not applicable. In the next "How to Talk", we
+will learn about a useful technique to check whether more training data is helpful. 
+In the following sections, we will look at common ways to reduce overfitting by 
+regularization and dimensionality reduction via feature selection, which leads to 
+simpler models by requiring fewer parameters to be fitted to the data.
+
+Recall earlier that L2 regularization is one approach to reduce the complexity of a
+model by penalizing large individual weights. We defined the squared L2 norm of our 
+weight vector, w, as follows:
+
+  L2: L2 norm of w equals summation from j=1 to j=m wofj squared
+  
+Another approach to reduce the model complexity is the related L1 regularization:
+
+  L1: L1 norm of w equals summation from j=1 to j=m absolute value wofj
+
+Here, we simply replaced the square of the weights by the sum of the absolute
+values of the weights. In contrast to L2 regularization, L1 regularization usually
+yields sparse feature vectors and most feature weights will be zero. Sparsity can
+be useful in practice if we have a high-dimensional dataset with many features that
+are irrelevant, especially in cases where we have more irrelevant dimensions than
+training examples. In this sense, L1 regularization can be understood as a technique
+for feature selection.
+
+An alternative way to reduce the complexity of the model and avoid overfitting
+is dimensionality reduction via feature selection, which is especially useful for
+unregularized models. There are two main categories of dimensionality reduction
+techniques: feature selection and feature extraction. Via feature selection, we select
+a subset of the original features, whereas in feature extraction, we derive information
+from the feature set to construct a new feature subspace.
+
+Sequential feature selection algorithms are a family of greedy search algorithms
+that are used to reduce an initial d-dimensional feature space to a k-dimensional
+feature subspace where k<d. The motivation behind feature selection algorithms is
+to automatically select a subset of features that are most relevant to the problem, to
+improve computational efficiency, or to reduce the generalization error of the model
+by removing irrelevant features or noise, which can be useful for algorithms that
+don't support regularization.
+
+Summary
+We started data preprocessing by looking at useful techniques to make sure that we handle
+missing data correctly. Before we feed data to a machine learning algorithm, we
+also have to make sure that we encode categorical variables correctly, and in this
+chapter, we saw how we can map ordinal and nominal feature values to integer
+representations.
+
+Moreover, we briefly discussed L1 regularization, which can help us to avoid
+overfitting by reducing the complexity of a model. As an alternative approach
+to removing irrelevant features, we used a sequential feature selection algorithm
+to select meaningful features from a dataset.
+
+In the next discussion, we will tackle about yet another useful approach to
+dimensionality reduction: feature extraction. It allows us to compress features
+onto a lower-dimensional subspace, rather than removing features entirely
+as in feature selection.
 
 Tune in to the next "How to Talk ...".
 
