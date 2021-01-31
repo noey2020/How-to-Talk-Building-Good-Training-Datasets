@@ -6,20 +6,23 @@ I appreciate comments. Shoot me an email at noel_s_cruz@yahoo.com!
 
 Hire me! 😊
 
-Building Good Training
-Datasets – Data
-Preprocessing
+Building Good Training Datasets - Data Preprocessing
+
 The quality of the data and the amount of useful information that it contains are key
 factors that determine how well a machine learning algorithm can learn. Therefore,
 it is absolutely critical to ensure that we examine and preprocess a dataset before
 we feed it to a learning algorithm.
 
-we will cover as follows:
-• Removing and imputing missing values from the dataset
-• Getting categorical data into shape for machine learning algorithms
-• Selecting relevant features for the model construction
+We will cover as follows:
+
+-- Removing and imputing missing values from the dataset
+
+-- Getting categorical data into shape for machine learning algorithms
+
+-- Selecting relevant features for the model construction
 
 Dealing with missing data
+
 It is not uncommon in real-world applications for our training examples to be
 missing one or more values for various reasons. There could have been an error
 in the data collection process, certain measurements may not be applicable, or
@@ -30,16 +33,18 @@ case, we can use the isnull method to return a DataFrame with Boolean values tha
 indicate whether a cell contains a numeric value (False) or if data is missing (True).
 Using the sum method, we can then return the number of missing values per column
 as follows:
+
 >>> df.isnull().sum()
 
-Note that you can always access the underlying NumPy array
-of a DataFrame via the values attribute before you feed it into
-a scikit-learn estimator:
+Note that you can always access the underlying NumPy array of a DataFrame via the
+values attribute before you feed it into a scikit-learn estimator:
+
 >>> df.values
 
 One of the easiest ways to deal with missing data is simply to remove the
 corresponding features (columns) or training examples (rows) from the dataset
 entirely; rows with missing values can easily be dropped via the dropna method:
+
 >>> df.dropna(axis=0)
 
 Although the removal of missing data seems to be a convenient approach, it also
@@ -51,6 +56,7 @@ at one of the most commonly used alternatives for dealing with missing values:
 interpolation techniques.
 
 Imputing missing values
+
 Often, the removal of training examples or dropping of entire feature columns
 is simply not feasible, because we might lose too much valuable data. In this case,
 we can use different interpolation techniques to estimate the missing values from
@@ -60,13 +66,19 @@ the mean value of the entire feature column. A convenient way to achieve this is
 using the SimpleImputer class from scikit-learn, as shown in the following code:
 
 >>> from sklearn.impute import SimpleImputer
+
 >>> import numpy as np
+
 >>> imr = SimpleImputer(missing_values=np.nan, strategy='mean')
+
 >>> imr = imr.fit(df.values)
+
 >>> imputed_data = imr.transform(df.values)
+
 >>> imputed_data
 
 Understanding the scikit-learn estimator API
+
 In the previous section, we used the SimpleImputer class from scikit-learn to impute
 missing values in our dataset. The SimpleImputer class belongs to the so-called
 transformer classes in scikit-learn, which are used for data transformation. The
@@ -77,6 +89,7 @@ needs to have the same number of features as the data array that was used to fit
 the model.
 
 Handling categorical data
+
 So far, we have only been working with numerical values. However, it is not
 uncommon for real-world datasets to contain one or more categorical feature
 columns. In this section, we will make use of simple yet effective examples
@@ -90,6 +103,7 @@ of t-shirt color as a nominal feature since it typically doesn't make sense to s
 for example, red is larger than blue.
 
 Mapping ordinal features
+
 To make sure that the learning algorithm interprets the ordinal features correctly,
 we need to convert the categorical string values into integers. Unfortunately, there
 is no convenient function that can automatically derive the correct order of the labels
@@ -99,6 +113,7 @@ features, for example, XL = L + 1 = M + 2:
 
 
 Encoding class labels
+
 Many machine learning libraries require that class labels are encoded as integer
 values. Although most estimators for classification in scikit-learn convert class
 labels to integers internally, it is considered good practice to provide class labels as
@@ -109,6 +124,7 @@ number we assign to a particular string label. Thus, we can simply enumerate
 the class labels, starting at 0:
 
 Bringing features onto the same scale
+
 Feature scaling is a crucial step in our preprocessing pipeline that can easily be
 forgotten. Decision trees and random forests are two of the very few machine
 learning algorithms where we don't need to worry about feature scaling. Those
@@ -129,20 +145,23 @@ scale: normalization and standardization. Those terms are often used quite loose
 in different fields, and the meaning has to be derived from the context. Most often,
 normalization refers to the rescaling of the features to a range of [0, 1], which is a
 special case of min-max scaling. To normalize our data, we can simply apply the
-min-max scaling to each feature column, where the new value, ????????????????????
-(????) , of an example,
-????(????) , can be calculated as follows:
-????????????????????
-(????) =
-????(????) - ????????????????
-???????????????? - ????????????????
-Here, ????(????) is a particular example, ???????????????? is the smallest value in a feature column,
-and ???????????????? is the largest value.
+min-max scaling to each feature column, where the new value, xnorm of i , of an example,
+xof i , can be calculated as follows:
+
+xnorm of i = (xof i - xmin) / (xmax - xmin)
+
+Here, xof i is a particular example, xmin is the smallest value in a feature column,
+and xmax is the largest value.
+
 The min-max scaling procedure is implemented in scikit-learn and can be used as
 follows:
+
 >>> from sklearn.preprocessing import MinMaxScaler
+
 >>> mms = MinMaxScaler()
+
 >>> X_train_norm = mms.fit_transform(X_train)
+
 >>> X_test_norm = mms.transform(X_test)
 
 Although normalization via min-max scaling is a commonly used technique
@@ -158,15 +177,14 @@ outliers and makes the algorithm less sensitive to them in contrast to min-max
 scaling, which scales the data to a limited range of values.
 
 The procedure for standardization can be expressed by the following equation:
-????????????????
-(????) =
-????(????) - ????????
-????????
-Here, ???????? is the sample mean of a particular feature column, and ???????? is the
+
+xstd of i = (xof i - muof x) / sigmaof x
+
+Here, muof x is the sample mean of a particular feature column, and sigmaof x is the
 corresponding standard deviation.
 
 Again, it is also important to highlight that we fit the StandardScaler class only
-once—on the training data—and use those parameters to transform the test dataset
+once - on the training data - and use those parameters to transform the test dataset
 or any new data point.
 
 Selecting meaningful features
@@ -180,8 +198,11 @@ is that our model is too complex for the given training data. Common solutions t
 reduce the generalization error are as follows:
 
 -- Collect more training data
+
 -- Introduce a penalty for complexity via regularization
+
 -- Choose a simpler model with fewer parameters
+
 -- Reduce the dimensionality of the data
 
 Collecting more training data is often not applicable. In the next "How to Talk", we
@@ -224,6 +245,7 @@ by removing irrelevant features or noise, which can be useful for algorithms tha
 don't support regularization.
 
 Summary
+
 We started data preprocessing by looking at useful techniques to make sure that we handle
 missing data correctly. Before we feed data to a machine learning algorithm, we
 also have to make sure that we encode categorical variables correctly, and in this
