@@ -183,6 +183,20 @@ xstd of i = (xof i - muof x) / sigmaof x
 Here, muof x is the sample mean of a particular feature column, and sigmaof x is the
 corresponding standard deviation.
 
+You can perform the standardization and normalization manually by executing the
+following code examples:
+
+>>> ex = np.array([0, 1, 2, 3, 4, 5])
+
+>>> print('standardized:', (ex - ex.mean()) / ex.std())
+
+standardized: [-1.46385011 -0.87831007 -0.29277002 0.29277002
+0.87831007 1.46385011]
+
+>>> print('normalized:', (ex - ex.min()) / (ex.max() - ex.min()))
+
+normalized: [ 0. 0.2 0.4 0.6 0.8 1. ]
+
 Again, it is also important to highlight that we fit the StandardScaler class only
 once - on the training data - and use those parameters to transform the test dataset
 or any new data point.
